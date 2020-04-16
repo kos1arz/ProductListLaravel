@@ -24,9 +24,13 @@ class ProductController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
      */
-    public function create()
+    public function create(Request $request)
     {
+        if(!$request->user()) {
+            return redirect('/login');
+        }
         return view('product.create');
     }
 
@@ -38,6 +42,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$request->user()) {
+            return redirect('/login');
+        }
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required'
